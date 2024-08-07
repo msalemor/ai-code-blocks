@@ -1,0 +1,8 @@
+python-dotenv
+langchain-openai
+requests
+ollama
+jinja2
+fastapi
+openai==1.35.15
+uvicorn[standard]
