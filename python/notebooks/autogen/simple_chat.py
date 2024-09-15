@@ -1,20 +1,11 @@
-import os
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 import autogen
 from autogen.coding import LocalCommandLineCodeExecutor
 from autogen import ConversableAgent, ChatResult
-
-from dotenv import load_dotenv
-
-load_dotenv("../../.env")
-
-model = os.getenv("GPT_MODEL")
-endpoint = os.getenv("ENDPOINT")
-api_key = os.getenv("API_KEY")
-api_version = os.getenv("API_VERSION")
+from settings import Settings
+settings = Settings()
 
 
 chat_history = []
@@ -76,16 +67,16 @@ class ExtendedConversableAgent(ConversableAgent):
 
 config_list = [
     {
-        "base_url": endpoint,
-        "api_key": api_key,
-        "model": model,
+        "base_url": settings.endpoint,
+        "api_key": settings.api_key,
+        "model": settings.model,
         "api_type": "azure",
-        "api_version": api_version
+        "api_version": settings.api_version
     }
 ]
 
 llm_config = {
-    "model": model,
+    "model": settings.model,
     "temperature": 0,
     "config_list": config_list,
     "cache_seed": None,

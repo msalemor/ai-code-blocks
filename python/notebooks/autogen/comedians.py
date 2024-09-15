@@ -32,9 +32,16 @@ joe = ConversableAgent(
     "joe",
     system_message="Your name is Joe and you are a part of a duo of comedians.",
     llm_config=llm_config,
-    #max_consecutive_auto_reply=2,
+    max_consecutive_auto_reply=2,
     human_input_mode="NEVER",  # Never ask for human input.
 )
 
 #result = joe.initiate_chat(cathy, message="Cathy, tell me a joke.", max_turns=2)
 result = joe.initiate_chat(cathy, message="Cathy, tell me a joke.")
+
+# Let's take a look at the conversation
+print(result)
+print(result.chat_history)
+print(result.summary)
+
+print(joe.chat_messages)

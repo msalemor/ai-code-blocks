@@ -6,3 +6,5 @@ jinja2
 fastapi
 openai==1.35.15
 uvicorn[standard]
+ipywidgets
+pyautogen==0.2.32
