@@ -1,8 +1,9 @@
 import os
-from openai import AzureOpenAI
+import asyncio
+from openai import AsyncAzureOpenAI
 import dotenv
 
-# Read the enviroment variables
+# Read the environment variables
 dotenv.load_dotenv()
 
 endpoint = os.getenv("ENDPOINT")
@@ -10,26 +11,27 @@ api_key = os.getenv("API_KEY")
 model = os.getenv("GPT_MODEL")
 api_version = os.getenv("API_VERSION")
 
-client = AzureOpenAI(api_key=api_key,
-                     azure_endpoint=endpoint,
-                     api_version=api_version)
+client = AsyncAzureOpenAI(
+    api_key=api_key, azure_endpoint=endpoint, api_version=api_version
+)
 
-if __name__ == "__main__":
+
+async def main():
     messages = []
     while True:
-        # Get the user input
         user_input = input("You (type 'exit' to break): ")
         if user_input == "exit":
             break
-        # Add the user input to the messages
         messages.append({"role": "user", "content": user_input})
-        # Call GPT with the messages
-        response = client.chat.completions.create(
-            model=model,  # model = "deployment_name".
+        response = await client.chat.completions.create(
+            model=model,
             messages=messages,
-            temperature=0.3,  # less creative
+            temperature=0.3,
         )
-        # Print and add the response to the messages
         resp = response.choices[0].message.content
         messages.append({"role": "assistant", "content": resp})
         print(f"Assistant: {resp}\n\n")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

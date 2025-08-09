@@ -1,6 +1,6 @@
 python-dotenv
 openai 
 azure-identity 
-requests
+httpx
 fastapi
 uvicorn[standard]

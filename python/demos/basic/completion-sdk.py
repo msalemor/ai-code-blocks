@@ -1,7 +1,8 @@
 import os
 import json
+import asyncio
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from openai import AsyncAzureOpenAI
 
 # Load the environment variables
 load_dotenv()
@@ -10,14 +11,15 @@ api_key = os.getenv("API_KEY")
 api_version = os.getenv("API_VERSION")
 model = os.getenv("GPT_MODEL")
 
-# Create the client
-client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version=api_version)
+# Create the async client
+client = AsyncAzureOpenAI(
+    azure_endpoint=endpoint, api_key=api_key, api_version=api_version
+)
+
 
 # Make a completion request
-
-
-def completion(input: str, temperature: float = 0.1) -> tuple[dict, str]:
-    completion = client.chat.completions.create(
+async def completion(input: str, temperature: float = 0.1) -> tuple[dict, str]:
+    completion = await client.chat.completions.create(
         model=model,
         messages=[
             {
@@ -30,10 +32,11 @@ def completion(input: str, temperature: float = 0.1) -> tuple[dict, str]:
 
 
 # Set the prompt and other parameters
-(full, response) = completion("What is the speed of light?")
+async def main():
+    full, response = await completion("What is the speed of light?")
+    print(json.dumps(full, indent=4))
+    print(response)
 
-# Print the full JSON response
-print(json.dumps(full, indent=4))
 
-# Print the response only
-print(response)
+if __name__ == "__main__":
+    asyncio.run(main())
