@@ -11,17 +11,18 @@ api_version = os.getenv("API_VERSION")
 model = os.getenv("GPT_MODEL")
 
 # Create the client
-client = AzureOpenAI(api_key=api_key,
-                     azure_endpoint=endpoint,
-                     api_version=api_version)
+client = AzureOpenAI(api_key=api_key, azure_endpoint=endpoint, api_version=api_version)
 
 
 def determine_intent(intent_statement: str):
     response = client.chat.completions.create(
         model=model,  # model = "deployment_name".
         messages=[
-            {"role": "system", "content": "You are a helpful assistant that can perform determine intent from the following list of intents:\n- WeatherIntent: A user asks a question about the weather.\n- ItineraryIntent: A user asks a question about a travel itinerary.\n- ReservationIntent: A user asks a question about making a reservation.\n- OtherIntent: User asks a question about anything else.\n\nNo prologue. Respond in the following JSON format:\n{\"intent\": }."},
-            {"role": "user", "content": intent_statement}
+            {
+                "role": "system",
+                "content": 'You are a helpful assistant that can determine the best intent from the following list of intents:\n- WeatherIntent: A user asks a question about the weather.\n- ItineraryIntent: A user asks a question about a travel itinerary.\n- ReservationIntent: A user asks a question about making a reservation.\n- OtherIntent: User asks a question about anything else.\n\nNo prologue. Respond in the following JSON format:\n{"intent": }.',
+            },
+            {"role": "user", "content": intent_statement},
         ],
         temperature=0.1,
     )
