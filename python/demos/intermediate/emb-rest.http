@@ -1,0 +1,22 @@
+POST {{$dotenv %EMB_FULL_ENDPOINT}}
+content-type: application/json
+api-key: {{$dotenv %API_KEY}}
+
+{
+    "input":"App Service is one of the most used services in Azure."
+}
+
+###
+
+POST {{$dotenv %FULL_ENDPOINT}}
+content-type: application/json
+api-key: {{$dotenv %API_KEY}}
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "In a short paragraph, what are some compute services in Azure?"
+        }
+    ]
+}
