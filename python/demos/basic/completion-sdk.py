@@ -33,7 +33,7 @@ async def completion(input: str, temperature: float = 0.1) -> tuple[dict, str]:
 
 # Set the prompt and other parameters
 async def main():
-    full, response = await completion("What is the speed of light?")
+    full, response = await completion("What are some Azure compute services?")
     print(json.dumps(full, indent=4))
     print(response)
 

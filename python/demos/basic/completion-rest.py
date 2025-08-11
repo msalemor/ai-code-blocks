@@ -23,7 +23,7 @@ async def completion(input: str, temperature: float = 0.1) -> dict:
 
 
 async def main():
-    response_json = await completion("What is the speed of light?")
+    response_json = await completion("What are some Azure compute services?")
     print(json.dumps(response_json, indent=4))
     print(response_json["choices"][0]["message"]["content"])
 
